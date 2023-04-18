@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -45,13 +47,14 @@ public class CarProcurementService {
     }
 
     @GetMapping("transactionrecords/{carId}")
-    public TransactionRecord transactionrecordsFor(@PathVariable String carId) {
+    public List<TransactionRecord> transactionrecordsFor(@PathVariable String carId) {
         log.info("Looking up transaction record for carId {}", carId);
-        Optional<TransactionRecord> optMaintRec = transactionRecordRepository.findByCarId(carId);
-        if (optMaintRec.isPresent()) {
-            log.info("Found transaction record for carId {}", carId);
+        List<TransactionRecord> transactionRecords = transactionRecordRepository.findAllByCarId(carId);
+        if (transactionRecords != null) {
+            log.info("Found {} transaction record for carId {}", transactionRecords.size(), carId);
+            return transactionRecords;
         }
-        return optMaintRec.orElse(null);
+        return Collections.emptyList();
     }
 
 }

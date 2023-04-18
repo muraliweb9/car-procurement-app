@@ -90,7 +90,7 @@ application-data:
         model: Cayenne
         type: SUV
         capacity: 5
-      transactionType: SELL
+      transactionType: SALE
       transactionDate: 2023-01-30
       amount: 14500.00
     - id: 3
